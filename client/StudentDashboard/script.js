@@ -57,7 +57,43 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("leaveForm").addEventListener("submit", function (e) {
     e.preventDefault();
-    alert("Leave request submitted!");
+    modal.style.display = "none";
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Leave modal logic
+  const modal = document.getElementById("leaveModal");
+  const btn = document.getElementById("requestLeaveBtn");
+  const span = document.querySelector(".close");
+
+  const notification = document.getElementById("notification");
+
+  btn.onclick = function () {
+    modal.style.display = "block";
+  }
+
+  span.onclick = function () {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  document.getElementById("leaveForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    // Show notification
+    notification.style.display = "block";
+
+    // Hide the notification after 3 seconds
+    setTimeout(function() {
+      notification.style.display = "none";
+    }, 3000);
+
+    // Close the modal after form submission
     modal.style.display = "none";
   });
 });

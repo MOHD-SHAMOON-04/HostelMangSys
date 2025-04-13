@@ -70,7 +70,7 @@
         #generate-password {
             max-width: 3rem;
             aspect-ratio: 1/1;
-            background-color: #00b31880;
+            background-color: #18b300c0;
             border: none;
             border-radius: 50%;
             cursor: pointer;
@@ -113,12 +113,12 @@
             <form id="loginForm">
                 <div class="input-group">
                     <label for="login-student-id">Enter your Student ID</label>
-                    <input type="number" id="login-student-id" placeholder="202301023" required min="100000000"
+                    <input type="number" id="login-student-id" placeholder="Student Id" required min="100000000"
                         max="9999999999">
                 </div>
                 <div class="input-group">
                     <label for="login-password">Enter your Password</label>
-                    <input type="text" id="login-password" placeholder="ultra-secure" required>
+                    <input type="text" id="login-password" placeholder="Password" required>
                 </div>
                 <button type="submit">Login</button>
                 <p id="toggle-form">Don't have an account? <a href="#">Sign Up</a></p>
@@ -128,18 +128,18 @@
             <form id="signupForm" style="display: none;">
                 <div class="input-group">
                     <label for="signup-name">Enter your Full Name</label>
-                    <input type="text" id="signup-name" placeholder="Bond 007" required>
+                    <input type="text" id="signup-name" placeholder="Name" required>
                 </div>
                 <div class="input-group">
                     <label for="signup-student-id">Enter your Student ID</label>
-                    <input type="number" id="signup-student-id" placeholder="202209088" required min="100000000"
+                    <input type="number" id="signup-student-id" placeholder="Student Id" required min="100000000"
                         max="9999999999">
                 </div>
                 <div class="input-group">
                     <label for="signup-password">Enter your Password</label>
                     <div id="signup-password-group">
-                        <input type="text" id="signup-password" placeholder="super duper strong" required>
-                        <button type="button" id="generate-password">🔑</button>
+                        <input type="text" id="signup-password" placeholder="Password" required>
+                        <!-- <button type="button" id="generate-password">🔑</button> -->
                     </div>
                 </div>
                 <button type="submit">Sign Up</button>

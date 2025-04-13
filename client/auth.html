@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login & Sign Up</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 60%;
+            /* text-align: center;   */
+        }
+
+        h1 {
+            margin-bottom: 1.25rem;
+            text-align: center;
+        }
+
+        .input-group {
+            margin: 1rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #generate-password {
+            max-width: 3rem;
+            aspect-ratio: 1/1;
+            background-color: #00b31880;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #generate-password:hover {
+            background-color: #40f85980;
+        }
+
+        #signup-password-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        p {
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+
+        p a {
+            color: #007bff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="form-box">
+            <h1 id="form-title">Login</h1>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="login-student-id">Enter your Student ID</label>
+                    <input type="number" id="login-student-id" placeholder="202301023" required min="100000000"
+                        max="9999999999">
+                </div>
+                <div class="input-group">
+                    <label for="login-password">Enter your Password</label>
+                    <input type="text" id="login-password" placeholder="ultra-secure" required>
+                </div>
+                <button type="submit">Login</button>
+                <p id="toggle-form">Don't have an account? <a href="#">Sign Up</a></p>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="signupForm" style="display: none;">
+                <div class="input-group">
+                    <label for="signup-name">Enter your Full Name</label>
+                    <input type="text" id="signup-name" placeholder="Bond 007" required>
+                </div>
+                <div class="input-group">
+                    <label for="signup-student-id">Enter your Student ID</label>
+                    <input type="number" id="signup-student-id" placeholder="202209088" required min="100000000"
+                        max="9999999999">
+                </div>
+                <div class="input-group">
+                    <label for="signup-password">Enter your Password</label>
+                    <div id="signup-password-group">
+                        <input type="text" id="signup-password" placeholder="super duper strong" required>
+                        <button type="button" id="generate-password">🔑</button>
+                    </div>
+                </div>
+                <button type="submit">Sign Up</button>
+                <p id="toggle-form">Already have an account? <a href="#">Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- <script src="script.js"></script> -->
+    <script>
+        const loginForm = document.getElementById("loginForm");
+        const signupForm = document.getElementById("signupForm");
+        const formTitle = document.getElementById("form-title");
+        const toggleLinks = document.querySelectorAll("#toggle-form a");
+
+        const loginStudentId = document.getElementById("login-student-id");
+        const loginPassword = document.getElementById("login-password");
+
+        const signupStudentId = document.getElementById("signup-student-id");
+        const signupPassword = document.getElementById("signup-password");
+        const signupName = document.getElementById("signup-name");
+
+        const generatePassword = document.getElementById("generate-password");
+
+        // Toggle between login and signup
+        toggleLinks.forEach(link => {
+            link.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                if (loginForm.style.display === "none") {
+                    loginForm.style.display = "block";
+                    signupForm.style.display = "none";
+                    formTitle.textContent = "Login";
+                } else {
+                    loginForm.style.display = "none";
+                    signupForm.style.display = "block";
+                    formTitle.textContent = "Sign Up";
+                }
+            });
+        });
+
+
+        signupStudentId.addEventListener("input", () => {
+            signupStudentId.value = signupStudentId.value.replace(/\D/, "");
+            // the above regular expression will remove any non-digit character
+            // and Prevents non-numeric input for Student ID
+        });
+
+        loginStudentId.addEventListener("input", () => {
+            loginStudentId.value = loginStudentId.value.replace(/\D/, "");
+        });
+
+
+        loginForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const studentId = parseInt(loginStudentId.value, 10);
+            const password = loginPassword.value;
+
+            if (!isNaN(studentId) && password.length >= 8) {
+                // alert(`Login Successful for Student ID: ${studentId}`);
+
+            } else {
+                alert("Please enter a valid Student ID and a password with at least 8 characters.");
+            }
+        });
+
+        // Handle signup form submission
+        signupForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const name = signupName.value;
+            const studentId = parseInt(signupStudentId.value, 10);
+            const password = signupPassword.value;
+
+            if (name.length > 0 && !isNaN(studentId) && password.length >= 8) {
+                alert(`Sign Up Successful for ${name} with Student ID: ${studentId}`);
+            } else {
+                alert("Please enter a valid name, Student ID and a password with at least 8 characters.");
+            }
+        });
+
+        generatePassword.addEventListener("click", function () {
+            const password = Math.random().toString("base64").slice(-8);
+            signupPassword.value = password;
+        });
+    </script>
+</body>
+
+</html>

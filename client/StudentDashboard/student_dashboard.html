@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <div class="header"><i class="fas fa-hotel"></i> Hostel Management System</div>
+
+  <div class="dashboard">
+    <div class="sidebar">
+      <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="#"><i class="fas fa-cog"></i> Settings</a>
+      <a href="#" id="requestLeaveBtn"><i class="fas fa-plane-departure"></i> Request Leave</a>
+      <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <div class="main">
+      <img id="profilePic" src="profile.jpg" alt="Profile Picture" class="profile-pic"><br>
+      <div class="info">
+        <div class="info-block"><label>Name:</label><p id="studentName">Loading...</p></div>
+        <div class="info-block"><label>Age:</label><p id="studentAge">Loading...</p></div>
+        <div class="info-block"><label>Hostel:</label><p id="studentHostel">Loading...</p></div>
+        <div class="info-block"><label>Hall:</label><p id="studentHall">Loading...</p></div>
+        <div class="info-block"><label>Room Number:</label><p id="studentRoom">Loading...</p></div>
+        <div class="info-block"><label>Floor:</label><p id="studentFloor">Loading...</p></div>
+        <div class="info-block"><label>Course:</label><p id="studentCourse">Loading...</p></div>
+        <div class="info-block"><label>Department:</label><p id="studentDepartment">Loading...</p></div>
+        <div class="info-block"><label>Year:</label><p id="studentYear">Loading...</p></div>
+        <div class="info-block"><label>Student Id:</label><p id="studentId">Loading...</p></div>
+        <div class="info-block"><label>Phone Number:</label><p id="studentPhone">Loading...</p></div>
+        <div class="info-block"><label>Email:</label><p id="studentEmail">Loading...</p></div>
+        <div class="info-block"><label>Local Guardian Name:</label><p id="studentGuardianName">Loading...</p></div>
+        <div class="info-block"><label>Local Guardian Phone:</label><p id="studentGuardianPhone">Loading...</p></div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Leave Request Modal -->
+  <div id="leaveModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Request Leave</h2>
+      <form id="leaveForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <label for="from">From Date:</label>
+        <input type="date" id="from" required>
+        <label for="to">To Date:</label>
+        <input type="date" id="to" required>
+        <label for="reason">Reason:</label>
+        <textarea id="reason" rows="4" required></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

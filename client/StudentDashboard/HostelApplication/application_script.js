@@ -1,18 +1,15 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("../StudentData.json")
+    .then(response => response.json())
+    .then(data => {
+      populateStudentData(data);
+    })
+    .catch(error => {
+      console.error("Error loading student data:", error);
+    });
+});
 
-  const studentData = {
-    name: "John Doe",
-    age: "20",
-    course: "Bachelor of Magic",
-    department: "Enchantment Sciences",
-    year: "2",
-    studentId: "123456",
-    phone: "+123456789",
-    email: "john.doe@example.com",
-    guardianName: "Gandalf The White",
-    guardianPhone: "+91-9876543210"
-  };
-
+function populateStudentData(studentData) {
   document.getElementById("studentName").value = studentData.name;
   document.getElementById("studentAge").value = studentData.age;
   document.getElementById("studentCourse").value = studentData.course;
@@ -47,4 +44,4 @@ document.addEventListener("DOMContentLoaded", function() {
 
     }, 800);
   });
-});
+}

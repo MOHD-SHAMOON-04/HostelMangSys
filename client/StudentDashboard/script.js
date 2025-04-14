@@ -1,36 +1,36 @@
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("StudentData.json")
+    .then(response => response.json())
+    .then(data => {
+      populateStudentData(data);
+    })
+    .catch(error => {
+      console.error("Error loading student data:", error);
+    });
+});
 
-document.addEventListener("DOMContentLoaded", function() {
-  const studentData = {
-    profilePicture: "profile.jpg",
-    name: "John Doe",
-    age: "20",
-    hostel: "",  // Empty means hostel is not allotted.
-    hall: "", // Empty means hall is not allotted.
-    room: "204",
-    floor: "2nd",
-    course: "Bachelor of Magic",
-    department: "Enchantment Sciences",
-    year: "2",
-    studentId: "123456",
-    phone: "+123456789",
-    email: "john.doe@example.com",
-    guardianName: "Gandalf The White",
-    guardianPhone: "+91-9876543210"
-  };
+function populateStudentData(studentData) {
+  document.getElementById("studentName").innerText = studentData.name;
+  document.getElementById("studentAge").innerText = studentData.age;
+  document.getElementById("studentHostel").innerText = studentData.hostel || "N/A";
+  document.getElementById("studentHall").innerText = studentData.hall;
+  document.getElementById("studentRoom").innerText = studentData.room;
+  document.getElementById("studentFloor").innerText = studentData.floor;
+  document.getElementById("studentCourse").innerText = studentData.course;
+  document.getElementById("studentDepartment").innerText = studentData.department;
+  document.getElementById("studentYear").innerText = studentData.year;
+  document.getElementById("studentId").innerText = studentData.studentId;
+  document.getElementById("studentPhone").innerText = studentData.phone;
+  document.getElementById("studentEmail").innerText = studentData.email;
+  document.getElementById("studentGuardianName").innerText = studentData.guardianName;
+  document.getElementById("studentGuardianPhone").innerText = studentData.guardianPhone;
 
-  document.getElementById("profilePic").src = studentData.profilePicture;
-  document.getElementById("studentName").textContent = studentData.name;
-  document.getElementById("studentAge").textContent = studentData.age;
-  document.getElementById("studentRoom").textContent = studentData.room;
-  document.getElementById("studentFloor").textContent = studentData.floor;
-  document.getElementById("studentCourse").textContent = studentData.course;
-  document.getElementById("studentDepartment").textContent = studentData.department;
-  document.getElementById("studentYear").textContent = studentData.year;
-  document.getElementById("studentId").textContent = studentData.studentId;
-  document.getElementById("studentPhone").textContent = studentData.phone;
-  document.getElementById("studentEmail").textContent = studentData.email;
-  document.getElementById("studentGuardianName").textContent = studentData.guardianName;
-  document.getElementById("studentGuardianPhone").textContent = studentData.guardianPhone;
+  // 🔒 Hide the Leave Button if hostel is not assigned
+  if (!studentData.hostel || studentData.hostel.trim() === "") {
+    const leaveBtn = document.getElementById("requestLeaveBtn");
+    if (leaveBtn) leaveBtn.style.display = "none";
+  }
+
 
   // Check if hostel is assigned
   if (studentData.hostel && studentData.hall) {
@@ -44,19 +44,21 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelector('[data-for-hall]').style.display = "none";
     document.querySelector('[data-for-room]').style.display = "none";
     document.querySelector('[data-for-floor]').style.display = "none";
+    const leaveBtn = document.getElementById('requestLeaveBtn');
+    if (leaveBtn) leaveBtn.style.display = 'none';
 
     // Show Apply for Hostel Button
     const applyDiv = document.createElement('div');
-  applyDiv.className = "apply-hostel-container";
-  applyDiv.innerHTML = `
-    <a href="./HostelApplication/hostel_application.html" class="apply-hostel-btn">
-      <i class="fas fa-bed"></i> Apply for Hostel
-    </a>
-  `;
-  document.querySelector('.info').appendChild(applyDiv);
-  }
+    applyDiv.className = "apply-hostel-container";
+    applyDiv.innerHTML = `
+      <a href="./HostelApplication/hostel_application.html" class="apply-hostel-btn">
+        <i class="fas fa-bed"></i> Apply for Hostel
+      </a>
+    `;
+    document.querySelector('.info').appendChild(applyDiv);
+    }
 
-});
+}
 
 
 document.addEventListener("DOMContentLoaded", function () {

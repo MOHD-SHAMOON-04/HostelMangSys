@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Login & Sign Up</title>
-    <!-- <link rel="stylesheet" href="style.css"> -->
+    <title>Login & Sign Up</title>
     <style>
         * {
             margin: 0;
@@ -29,7 +28,6 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             width: 60%;
-            /* text-align: center;   */
         }
 
         h1 {
@@ -67,19 +65,6 @@
             background-color: #0056b3;
         }
 
-        #generate-password {
-            max-width: 3rem;
-            aspect-ratio: 1/1;
-            background-color: #00b31880;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        #generate-password:hover {
-            background-color: #40f85980;
-        }
-
         #signup-password-group {
             display: flex;
             align-items: center;
@@ -100,6 +85,51 @@
         p a:hover {
             text-decoration: underline;
         }
+
+        .login-switch {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+            gap: 0.5rem;
+            background: #eaeaea;
+            padding: 5px;
+            border-radius: 8px;
+        }
+
+        .login-switch button {
+            flex: 1;
+            border: none;
+            padding: 10px 0;
+            border-radius: 6px;
+            background-color: transparent;
+            color: #333;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-switch button.active {
+            background-color: #007bff;
+            color: white;
+            box-shadow: 0 3px 8px rgba(0, 123, 255, 0.3);
+        }
+
+        .login-switch button:hover {
+            background-color: #007bff;
+            color: white;
+        }
+    
+        .login-switch button:not(.active):hover {
+            background-color: #eaeaea;
+            color: #007bff;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+            }
+        }
+
     </style>
 </head>
 
@@ -107,39 +137,55 @@
 
     <div class="container">
         <div class="form-box">
-            <h1 id="form-title">Login</h1>
 
-            <!-- Login Form -->
+            <div class="login-switch">
+                <button id="studentMode" class="active">Student Login</button>
+                <button id="adminMode">Admin Login</button>
+            </div>
+
+            <h1 id="form-title">Student Login</h1>
+
+            <!-- Student Login Form -->
             <form id="loginForm">
                 <div class="input-group">
                     <label for="login-student-id">Enter your Student ID</label>
-                    <input type="number" id="login-student-id" placeholder="202301023" required min="100000000"
-                        max="9999999999">
+                    <input type="number" id="login-student-id" placeholder="Student Id" required min="100000000" max="9999999999">
                 </div>
                 <div class="input-group">
                     <label for="login-password">Enter your Password</label>
-                    <input type="text" id="login-password" placeholder="ultra-secure" required>
+                    <input type="text" id="login-password" placeholder="Password" required>
                 </div>
                 <button type="submit">Login</button>
                 <p id="toggle-form">Don't have an account? <a href="#">Sign Up</a></p>
+            </form>
+
+            <!-- Admin Login Form -->
+            <form id="adminLoginForm" style="display: none;">
+                <div class="input-group">
+                    <label for="admin-username">Admin Username</label>
+                    <input type="text" id="admin-username" placeholder="Username" required>
+                </div>
+                <div class="input-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" placeholder="Password" required>
+                </div>
+                <button type="submit">Login as Admin</button>
             </form>
 
             <!-- Sign Up Form -->
             <form id="signupForm" style="display: none;">
                 <div class="input-group">
                     <label for="signup-name">Enter your Full Name</label>
-                    <input type="text" id="signup-name" placeholder="Bond 007" required>
+                    <input type="text" id="signup-name" placeholder="Name" required>
                 </div>
                 <div class="input-group">
                     <label for="signup-student-id">Enter your Student ID</label>
-                    <input type="number" id="signup-student-id" placeholder="202209088" required min="100000000"
-                        max="9999999999">
+                    <input type="number" id="signup-student-id" placeholder="Student Id" required min="100000000" max="9999999999">
                 </div>
                 <div class="input-group">
                     <label for="signup-password">Enter your Password</label>
                     <div id="signup-password-group">
-                        <input type="text" id="signup-password" placeholder="super duper strong" required>
-                        <button type="button" id="generate-password">🔑</button>
+                        <input type="text" id="signup-password" placeholder="Password" required>
                     </div>
                 </div>
                 <button type="submit">Sign Up</button>
@@ -148,81 +194,114 @@
         </div>
     </div>
 
-    <!-- <script src="script.js"></script> -->
+    <!-- Notification Popup -->
+    <div id="loginNotification" style="
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #dc3545;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 1000;
+    ">
+        Invalid credentials. Please try again.
+    </div>
+
     <script>
+        const validStudent = { studentId: 1234567890, password: "password123" };
+        const validAdmin = { username: "admin", password: "adminpass" };
+
         const loginForm = document.getElementById("loginForm");
+        const adminLoginForm = document.getElementById("adminLoginForm");
         const signupForm = document.getElementById("signupForm");
         const formTitle = document.getElementById("form-title");
         const toggleLinks = document.querySelectorAll("#toggle-form a");
 
-        const loginStudentId = document.getElementById("login-student-id");
-        const loginPassword = document.getElementById("login-password");
+        const studentModeBtn = document.getElementById("studentMode");
+        const adminModeBtn = document.getElementById("adminMode");
 
-        const signupStudentId = document.getElementById("signup-student-id");
-        const signupPassword = document.getElementById("signup-password");
-        const signupName = document.getElementById("signup-name");
+        studentModeBtn.addEventListener("click", () => {
+            studentModeBtn.classList.add("active");
+            adminModeBtn.classList.remove("active");
+            formTitle.textContent = "Student Login";
+            loginForm.style.display = "block";
+            adminLoginForm.style.display = "none";
+            signupForm.style.display = "none";
+        });
 
-        const generatePassword = document.getElementById("generate-password");
+        adminModeBtn.addEventListener("click", () => {
+            studentModeBtn.classList.remove("active");
+            adminModeBtn.classList.add("active");
+            formTitle.textContent = "Admin Login";
+            loginForm.style.display = "none";
+            adminLoginForm.style.display = "block";
+            signupForm.style.display = "none";
+        });
 
-        // Toggle between login and signup
         toggleLinks.forEach(link => {
-            link.addEventListener("click", function (event) {
+            link.addEventListener("click", (event) => {
                 event.preventDefault();
-
-                if (loginForm.style.display === "none") {
-                    loginForm.style.display = "block";
-                    signupForm.style.display = "none";
-                    formTitle.textContent = "Login";
-                } else {
+                if (signupForm.style.display === "none") {
                     loginForm.style.display = "none";
+                    adminLoginForm.style.display = "none";
                     signupForm.style.display = "block";
                     formTitle.textContent = "Sign Up";
+                } else {
+                    signupForm.style.display = "none";
+                    loginForm.style.display = studentModeBtn.classList.contains("active") ? "block" : "none";
+                    adminLoginForm.style.display = adminModeBtn.classList.contains("active") ? "block" : "none";
+                    formTitle.textContent = studentModeBtn.classList.contains("active") ? "Student Login" : "Admin Login";
                 }
             });
         });
 
-
-        signupStudentId.addEventListener("input", () => {
-            signupStudentId.value = signupStudentId.value.replace(/\D/, "");
-            // the above regular expression will remove any non-digit character
-            // and Prevents non-numeric input for Student ID
-        });
-
-        loginStudentId.addEventListener("input", () => {
-            loginStudentId.value = loginStudentId.value.replace(/\D/, "");
-        });
-
-
         loginForm.addEventListener("submit", function (event) {
             event.preventDefault();
-            const studentId = parseInt(loginStudentId.value, 10);
-            const password = loginPassword.value;
+            const studentId = parseInt(document.getElementById("login-student-id").value, 10);
+            const password = document.getElementById("login-password").value;
 
-            if (!isNaN(studentId) && password.length >= 8) {
-                // alert(`Login Successful for Student ID: ${studentId}`);
-
+            if (studentId === validStudent.studentId && password === validStudent.password) {
+                window.location.href = "./StudentDashboard/student_dashboard.html";
             } else {
-                alert("Please enter a valid Student ID and a password with at least 8 characters.");
+                showError();
             }
         });
 
-        // Handle signup form submission
-        signupForm.addEventListener("submit", function (event) {
+        adminLoginForm.addEventListener("submit", function (event) {
             event.preventDefault();
-            const name = signupName.value;
-            const studentId = parseInt(signupStudentId.value, 10);
-            const password = signupPassword.value;
+            const username = document.getElementById("admin-username").value;
+            const password = document.getElementById("admin-password").value;
 
-            if (name.length > 0 && !isNaN(studentId) && password.length >= 8) {
-                alert(`Sign Up Successful for ${name} with Student ID: ${studentId}`);
+            if (username === validAdmin.username && password === validAdmin.password) {
+                window.location.href = "./AdminDashboard/admin.html";
             } else {
-                alert("Please enter a valid name, Student ID and a password with at least 8 characters.");
+                showError();
             }
         });
 
-        generatePassword.addEventListener("click", function () {
-            const password = Math.random().toString("base64").slice(-8);
-            signupPassword.value = password;
+        function showError() {
+            const notification = document.getElementById("loginNotification");
+            notification.style.display = "block";
+            setTimeout(() => notification.style.display = "none", 3000);
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            const hash = window.location.hash;
+            if (hash === "#signup") {
+                signupForm.style.display = "block";
+                loginForm.style.display = "none";
+                adminLoginForm.style.display = "none";
+                formTitle.textContent = "Sign Up";
+            } else if (hash === "#admin") {
+                adminModeBtn.click();
+            } else {
+                studentModeBtn.click();
+            }
         });
     </script>
 </body>

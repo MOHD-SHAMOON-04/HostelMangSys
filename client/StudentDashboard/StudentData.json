@@ -1,0 +1,17 @@
+{
+    "name": "John Doe",
+    "age": 20,
+    "hostel": "",
+    "hall": "Hall A",
+    "room": "101",
+    "floor": "1st",
+    "course": "B.Tech Computer Engineering",
+    "department": "Computer Science",
+    "year": "2nd",
+    "studentId": "JMI2023CSE101",
+    "phone": "9876543210",
+    "email": "john@example.com",
+    "guardianName": "Mr. Doe",
+    "guardianPhone": "9123456789"
+}
+  

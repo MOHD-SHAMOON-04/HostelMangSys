@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Settings</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .settings-container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .settings-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2E7D32;
+    }
+
+    .settings-container form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .settings-container label {
+      font-weight: bold;
+      color: #2E7D32;
+    }
+
+    .settings-container input, 
+    .settings-container select, 
+    .settings-container textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .settings-container button {
+      background-color: #2E7D32;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .settings-container button:hover {
+      background-color: #1B5E20;
+    }
+
+    .back-btn {
+      margin-bottom: 20px;
+      display: inline-block;
+      background: #ccc;
+      color: black;
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      background: #bbb;
+    }
+
+    .error-message {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="settings-container">
+    <a href="../student_dashboard.html" class="back-btn">← Back to Dashboard</a>
+    <h2>Change Profile Details</h2>
+    <form id="settingsForm">
+      <label for="changeType">Select what to change:</label>
+      <select id="changeType" required>
+        <option value="">-- Select an Option --</option>
+        <option value="profilePic">Profile Picture</option>
+        <option value="phone">Phone Number</option>
+        <option value="password">Password</option>
+      </select>
+
+      <div id="dynamicInputContainer"></div>
+
+      <label for="reason">Reason for Change:</label>
+      <textarea id="reason" rows="4" placeholder="Enter reason..." required></textarea>
+
+      <div class="error-message" id="errorMessage" style="display:none;"></div>
+
+      <button type="submit">Submit Application</button>
+    </form>
+  </div>
+
+  <script>
+    const changeType = document.getElementById("changeType");
+    const inputContainer = document.getElementById("dynamicInputContainer");
+    const errorMessage = document.getElementById("errorMessage");
+
+    changeType.addEventListener("change", function () {
+      inputContainer.innerHTML = "";
+      errorMessage.style.display = "none";
+
+      if (this.value === "profilePic") {
+        inputContainer.innerHTML = `
+          <label for="profilePic">Upload New Profile Picture:</label>
+          <input type="file" id="profilePic" accept="image/*" required>
+        `;
+      } else if (this.value === "phone") {
+        inputContainer.innerHTML = `
+          <label for="newValue">New Phone Number:</label>
+          <input type="tel" id="newValue" placeholder="Enter new phone number" required>
+        `;
+      } else if (this.value === "password") {
+        inputContainer.innerHTML = `
+          <label for="oldPassword">Current Password:</label>
+          <input type="password" id="oldPassword" placeholder="Enter current password" required>
+
+          <label for="newPassword">New Password:</label>
+          <input type="password" id="newPassword" placeholder="Enter new password" required>
+
+          <label for="confirmPassword">Re-enter New Password:</label>
+          <input type="password" id="confirmPassword" placeholder="Re-enter new password" required>
+        `;
+      }
+    });
+
+    document.getElementById("settingsForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      errorMessage.style.display = "none";
+
+      const selectedOption = changeType.value;
+
+      if (selectedOption === "password") {
+        const newPassword = document.getElementById("newPassword").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+
+        if (newPassword !== confirmPassword) {
+          errorMessage.textContent = "New passwords do not match.";
+          errorMessage.style.display = "block";
+          return;
+        }
+      }
+
+      // If all validations pass
+      window.location.href = "../student_dashboard.html";
+    });
+  </script>
+</body>
+</html>

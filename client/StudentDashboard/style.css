@@ -153,3 +153,35 @@ form button:hover {
   z-index: 1000;
 }
 
+.apply-hostel-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.apply-hostel-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: linear-gradient(45deg, #43a047, #66bb6a);
+  color: white;
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(67, 160, 71, 0.3);
+  transition: all 0.3s ease;
+}
+
+.apply-hostel-btn i {
+  margin-right: 8px;
+}
+
+.apply-hostel-btn:hover {
+  background: linear-gradient(45deg, #388e3c, #43a047);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(67, 160, 71, 0.5);
+}
+

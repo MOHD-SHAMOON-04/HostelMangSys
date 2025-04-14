@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Hostel Application Form</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <div class="header"><i class="fas fa-bed"></i> Apply for Hostel</div>
+
+  <div class="application-container">
+    <form id="hostelApplicationForm">
+      <h2>Student Information</h2>
+
+      <label>Name:</label>
+      <input type="text" id="studentName" required>
+
+      <label>Age:</label>
+      <input type="number" id="studentAge" required>
+
+      <label>Course:</label>
+      <input type="text" id="studentCourse" required>
+
+      <label>Department:</label>
+      <input type="text" id="studentDepartment" required>
+
+      <label>Year:</label>
+      <input type="text" id="studentYear" required>
+
+      <label>Student ID:</label>
+      <input type="text" id="studentId" required>
+
+      <label>Phone Number:</label>
+      <input type="text" id="studentPhone" required>
+
+      <label>Email:</label>
+      <input type="email" id="studentEmail" required>
+
+      <label>Local Guardian Name:</label>
+      <input type="text" id="studentGuardianName" required>
+
+      <label>Local Guardian Phone:</label>
+      <input type="text" id="studentGuardianPhone" required>
+
+      <button type="submit"><i class="fas fa-paper-plane"></i> Submit Application</button>
+    </form>
+  </div>
+
+  <!-- Loading Screen -->
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Application Submitted Notification -->
+  <div id="submitNotification" class="notification">
+    🎉 Application submitted successfully!
+  </div>
+
+  <script src="application_script.js"></script>
+</body>
+</html>

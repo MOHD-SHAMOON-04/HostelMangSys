@@ -42,6 +42,11 @@
   background: linear-gradient(45deg, #388e3c, #43a047);
   transform: translateY(-2px);
 }
+
+#submitbtn {
+  margin-top: 15px;
+}
+
 /* Loading Overlay */
 .loading-overlay {
   display: none;

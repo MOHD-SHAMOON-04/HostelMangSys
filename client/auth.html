@@ -148,8 +148,32 @@
         </div>
     </div>
 
+    <!-- Notification Popup -->
+    <div id="loginNotification" style="
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #dc3545; /* Bootstrap danger red */
+        color: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 1000;
+        ">
+        Invalid Student ID or Password. Please try again.
+    </div>
+
+
     <!-- <script src="script.js"></script> -->
     <script>
+        // dummy credentials
+        const validCredentials = {
+            studentId: 1234567890,
+            password: "password123"
+        };
         const loginForm = document.getElementById("loginForm");
         const signupForm = document.getElementById("signupForm");
         const formTitle = document.getElementById("form-title");
@@ -162,67 +186,58 @@
         const signupPassword = document.getElementById("signup-password");
         const signupName = document.getElementById("signup-name");
 
-        const generatePassword = document.getElementById("generate-password");
-
-        // Toggle between login and signup
+        // Toggle between forms
         toggleLinks.forEach(link => {
             link.addEventListener("click", function (event) {
-                event.preventDefault();
+            event.preventDefault();
 
-                if (loginForm.style.display === "none") {
-                    loginForm.style.display = "block";
-                    signupForm.style.display = "none";
-                    formTitle.textContent = "Login";
-                } else {
-                    loginForm.style.display = "none";
-                    signupForm.style.display = "block";
-                    formTitle.textContent = "Sign Up";
-                }
+            if (loginForm.style.display === "none") {
+                loginForm.style.display = "block";
+                signupForm.style.display = "none";
+                formTitle.textContent = "Login";
+            } else {
+                loginForm.style.display = "none";
+                signupForm.style.display = "block";
+                formTitle.textContent = "Sign Up";
+            }
             });
         });
 
-
-        signupStudentId.addEventListener("input", () => {
-            signupStudentId.value = signupStudentId.value.replace(/\D/, "");
-            // the above regular expression will remove any non-digit character
-            // and Prevents non-numeric input for Student ID
-        });
-
-        loginStudentId.addEventListener("input", () => {
-            loginStudentId.value = loginStudentId.value.replace(/\D/, "");
-        });
-
-
+        // Handle login redirect if correct credentials are provided
         loginForm.addEventListener("submit", function (event) {
             event.preventDefault();
             const studentId = parseInt(loginStudentId.value, 10);
             const password = loginPassword.value;
 
-            if (!isNaN(studentId) && password.length >= 8) {
-                // alert(`Login Successful for Student ID: ${studentId}`);
-
+            if (
+                studentId === validCredentials.studentId &&
+                password === validCredentials.password
+            ) {
+                window.location.href = "./StudentDashboard/student_dashboard.html";
             } else {
-                alert("Please enter a valid Student ID and a password with at least 8 characters.");
+                const notification = document.getElementById("loginNotification");
+                notification.style.display = "block";
+
+                // Auto-hide after 3 seconds
+                setTimeout(() => {
+                    notification.style.display = "none";
+                }, 3000);
             }
+
         });
 
-        // Handle signup form submission
-        signupForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            const name = signupName.value;
-            const studentId = parseInt(signupStudentId.value, 10);
-            const password = signupPassword.value;
-
-            if (name.length > 0 && !isNaN(studentId) && password.length >= 8) {
-                alert(`Sign Up Successful for ${name} with Student ID: ${studentId}`);
-            } else {
-                alert("Please enter a valid name, Student ID and a password with at least 8 characters.");
+        // Auto-toggle based on hash
+        window.addEventListener("DOMContentLoaded", () => {
+            const hash = window.location.hash;
+            if (hash === "#signup") {
+            loginForm.style.display = "none";
+            signupForm.style.display = "block";
+            formTitle.textContent = "Sign Up";
+            } else if (hash === "#login") {
+            loginForm.style.display = "block";
+            signupForm.style.display = "none";
+            formTitle.textContent = "Login";
             }
-        });
-
-        generatePassword.addEventListener("click", function () {
-            const password = Math.random().toString("base64").slice(-8);
-            signupPassword.value = password;
         });
     </script>
 </body>
